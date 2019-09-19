@@ -3,10 +3,10 @@ version: "3"
 services:
   mongod001: &mongod
     container_name: mongors001
-    image: mongo:3.2
+    image: mongo:3.6
     networks:
       - mongo_net
-    command: mongod --replSet rs1
+    command: mongod --replSet rs1 --bind_ip 0.0.0.0
     ports:
       - "30001:27017"
   mongod002:
