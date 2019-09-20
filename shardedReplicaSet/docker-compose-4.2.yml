@@ -1,6 +1,21 @@
 version: "3"
 
 services:
+  mongoc001: &mongoc
+    container_name: mongoc001
+    image: mongo:4.2
+    networks:
+      - mongo_net
+    volumes:
+      - ./mongoc.conf:/etc/mongoc.conf
+    command: mongod --config /etc/mongoc.conf
+  mongoc002:
+    <<: *mongoc
+    container_name: mongoc002
+  mongoc003:
+    <<: *mongoc
+    container_name: mongoc003
+
   mongod001: &shardRepl_1
     container_name: shardRepl_1_001
     image: mongo:4.2
@@ -39,21 +54,6 @@ services:
   mongod009:
     <<: *shardRepl_3
     container_name: shardRepl_3_003
-
-  mongoc001: &mongoc
-    container_name: mongoc001
-    image: mongo:4.2
-    networks:
-      - mongo_net
-    volumes:
-      - ./mongoc.conf:/etc/mongoc.conf
-    command: mongod --config /etc/mongoc.conf
-  mongoc002:
-    <<: *mongoc
-    container_name: mongoc002
-  mongoc003:
-    <<: *mongoc
-    container_name: mongoc003
 
   mongos001:
     container_name: mongos001
