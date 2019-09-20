@@ -1,20 +1,6 @@
 version: "3"
 
 services:
-  mongod001: &mongod
-    container_name: mongod001
-    image: mongo:3.6
-    networks:
-      - mongo_net
-    volumes:
-      - ./mongod.conf:/etc/mongod.conf
-    command: mongod --config /etc/mongod.conf
-  mongod002:
-    <<: *mongod
-    container_name: mongod002
-  mongod003:
-    <<: *mongod
-    container_name: mongod003
   mongoc001: &mongoc
     container_name: mongoc001
     image: mongo:3.6
@@ -29,6 +15,22 @@ services:
   mongoc003:
     <<: *mongoc
     container_name: mongoc003
+
+  mongod001: &mongod
+    container_name: mongod001
+    image: mongo:3.6
+    networks:
+      - mongo_net
+    volumes:
+      - ./mongod.conf:/etc/mongod.conf
+    command: mongod --config /etc/mongod.conf
+  mongod002:
+    <<: *mongod
+    container_name: mongod002
+  mongod003:
+    <<: *mongod
+    container_name: mongod003
+
   mongos001:
     container_name: mongos001
     image: mongo:3.6
