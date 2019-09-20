@@ -1,0 +1,71 @@
+version: "3"
+
+services:
+  mongod001: &shardRepl_1
+    container_name: shardRepl_1_001
+    image: mongo:4.2
+    networks:
+      - mongo_net
+    volumes:
+      - ./mongod_1.conf:/etc/mongod.conf
+    command: mongod --config /etc/mongod.conf
+  mongod002:
+    <<: *shardRepl_1
+    container_name: shardRepl_1_002
+  mongod003:
+    <<: *shardRepl_1
+    container_name: shardRepl_1_003
+
+  mongod004: &shardRepl_2
+    <<: *shardRepl_1
+    container_name: shardRepl_2_001
+    volumes:
+      - ./mongod_2.conf:/etc/mongod.conf
+  mongod005:
+    <<: *shardRepl_2
+    container_name: shardRepl_2_002
+  mongod006:
+    <<: *shardRepl_2
+    container_name: shardRepl_2_003
+
+  mongod007: &shardRepl_3
+    <<: *shardRepl_1
+    container_name: shardRepl_3_001
+    volumes:
+      - ./mongod_3.conf:/etc/mongod.conf
+  mongod008:
+    <<: *shardRepl_3
+    container_name: shardRepl_3_002
+  mongod009:
+    <<: *shardRepl_3
+    container_name: shardRepl_3_003
+
+  mongoc001: &mongoc
+    container_name: mongoc001
+    image: mongo:4.2
+    networks:
+      - mongo_net
+    volumes:
+      - ./mongoc.conf:/etc/mongoc.conf
+    command: mongod --config /etc/mongoc.conf
+  mongoc002:
+    <<: *mongoc
+    container_name: mongoc002
+  mongoc003:
+    <<: *mongoc
+    container_name: mongoc003
+
+  mongos001:
+    container_name: mongos001
+    image: mongo:4.2
+    networks:
+      - mongo_net
+    volumes:
+      - ./mongos.conf:/etc/mongos.conf
+    command: mongos --config /etc/mongos.conf
+    ports:
+      - "27017:27017"
+
+networks:
+  mongo_net:
+

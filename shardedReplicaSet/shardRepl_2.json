@@ -1,0 +1,8 @@
+{
+  "_id": "shardRepl_2",
+  "members": [
+    {"_id": 0, "host": "shardRepl_2_001:27018"},
+    {"_id": 1, "host": "shardRepl_2_002:27018"},
+    {"_id": 2, "host": "shardRepl_2_003:27018"}
+  ]
+}
