@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  mongoc001: &mongoc
+    container_name: mongoc001
+    image: mongo:3.4
+    networks:
+      - mongo_net
+    volumes:
+      - ./mongoc.conf:/etc/mongoc.conf
+    command: mongod --config /etc/mongoc.conf
+  mongoc002:
+    <<: *mongoc
+    container_name: mongoc002
+  mongoc003:
+    <<: *mongoc
+    container_name: mongoc003
+
+  mongod001: &mongod
+    container_name: mongod001
+    image: mongo:3.4
+    networks:
+      - mongo_net
+    volumes:
+      - ./mongod.conf:/etc/mongod.conf
+    command: mongod --config /etc/mongod.conf
+  mongod002:
+    <<: *mongod
+    container_name: mongod002
+  mongod003:
+    <<: *mongod
+    container_name: mongod003
+
+  mongos001:
+    container_name: mongos001
+    image: mongo:3.4
+    networks:
+      - mongo_net
+    volumes:
+      - ./mongos.conf:/etc/mongos.conf
+    command: mongos --config /etc/mongos.conf
+    ports:
+      - "27017:27017"
+
+networks:
+  mongo_net:
+
