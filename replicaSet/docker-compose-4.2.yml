@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  mongod001: &mongod
+    container_name: mongors001
+    image: mongo:4.2
+    networks:
+      - mongo_net
+    command: mongod --replSet rs1 --bind_ip 0.0.0.0
+    ports:
+      - "30001:27017"
+  mongod002:
+    <<: *mongod
+    container_name: mongors002
+    ports:
+      - "30002:27017"
+  mongod003:
+    <<: *mongod
+    container_name: mongors003
+    ports:
+      - "30003:27017"
+  arbiter001:
+    <<: *mongod
+    container_name: arbiter001
+    ports:
+      - "30004:27017"
+
+networks:
+  mongo_net:
+
